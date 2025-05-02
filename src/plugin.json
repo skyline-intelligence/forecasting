@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "app",
+  "name": "Forecasting",
+  "id": "skylineintelligence-forecasting-app",
+  "backend": true,
+  "executable": "gpx_forecasting",
+  "info": {
+    "description": "Advanced time series forecasting solution with high-precision predictive analytics and real-time anomaly detection. Features customizable configuration for multiple data sources, secure on-premises deployment, and seamless Grafana integration for intuitive visualization.",
+    "keywords": ["forecasting", "prediction", "time series", "anomaly detection"],
+    "logos": {
+      "small": "img/logo.jpg",
+      "large": "img/logo.jpg"
+    },
+    "screenshots": [
+      {
+        "name": "Dashboard Overview",
+        "path": "img/landing.png"
+      }
+    ],
+    "version": "1.0.0",
+    "updated": "2025-04-12"
+  },
+  "includes": [
+    {
+      "type": "page",
+      "name": "Metrics Dashboard",
+      "path": "/a/%PLUGIN_ID%/metrics",
+      "addToNav": true,
+      "defaultNav": false
+    },
+    {
+      "type": "page",
+      "icon": "cog",
+      "name": "Configuration",
+      "path": "/plugins/%PLUGIN_ID%",
+      "role": "Admin",
+      "addToNav": true
+    }
+  ],
+  "dependencies": {
+    "grafanaDependency": ">=10.4.0",
+    "plugins": []
+  }
+}

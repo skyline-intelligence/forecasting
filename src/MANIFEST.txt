@@ -1,0 +1,54 @@
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+{
+  "manifestVersion": "2.0.0",
+  "signatureType": "private",
+  "signedByOrg": "skylineintelligence",
+  "signedByOrgName": "skylineintelligence",
+  "rootUrls": [
+    "http://localhost:3000/"
+  ],
+  "plugin": "skylineintelligence-forecasting-app",
+  "version": "1.0.0",
+  "time": 1741161758270,
+  "keyId": "7e4d0c6a708866e7",
+  "files": {
+    "462.js.map": "cf2580f74cf3039d203dd69d6ada0258ef584713865e118f00c3618c56891f25",
+    "510.js.LICENSE.txt": "868940af08ed6d16f4dd27a057de68fc8b6e8114b199239540dc6da53c72dfb8",
+    "864.js.map": "01ee821bf69cf35f7a454bc6bed76c8e3f292052e6754d33025a237b0602ae8a",
+    "LICENSE": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851",
+    "CHANGELOG.md": "aaa78be4710ef41d56ddab1edbd180ef9f9adfea2f293109aae925dc33a1b9b3",
+    "201.js": "6be22e0a2474bfca018e8f6908774bf0cd9f6e605f2aa83e3b20e8ecc55c80e1",
+    "372.js.map": "24f0547411503b61531cb5c3082b7a442505b77991fb3b18e9f80b77449f545a",
+    "54.js": "310a7b5961c494ea2effd09bdfc0f93e471f433c20704d366c78a527aed9b3cf",
+    "201.js.map": "41d37d76a7ac302d376547a2e2c6a84df94bbb870b6d28cd8b3e12d2f3a785bf",
+    "module.js.map": "7720ed8c33dbc3a19777b90b77a68c8a3332b9b5834f1f4e159edab2fc27170a",
+    "510.js": "276e9fb71985f4b25a5a10917007252c408d0bac200eeccc79495b76ad92e53e",
+    "466.js.map": "c4ca960437b012f2837a9814a4ec681ef776fbad5fd4d80dcb56480ed01e0123",
+    "864.js": "3a07164fa087f29961be949964063467a857f76289aa81eef8a1cbcdb2a170f6",
+    "plugin.json": "e9fdd5a64bd0e457fc46278e62ca0b82a7efcdd3300def85f08fda6458d91905",
+    "README.md": "6b11ac6dc7dc066bd8cf9da08940deefa789fcce9825c5161f2c117eb17b3b37",
+    "img/logo.jpg": "1defc6f7e585c67657bcfd8fddc599ee7dfa82f8674413f49fa274c2cd453ec6",
+    "54.js.map": "441470046773d8679e706d6ce1570445c3e87365ace91e58840b1fc49da8cb16",
+    "module.js": "bf907f32927c57e03acc9092afed49b3e687cace57ca9fef494e8c63ade241f6",
+    "510.js.map": "a903916cc38942ee23cb847a53b1296cda1f3e686ceec9b019a827adc63a1d8a",
+    "462.js": "2d5114d9811c56bed875c9dba8820c65975ca640e3c7c6b0e3d84ae11208be20",
+    "466.js": "e41c1f1f29046bd3049da42a38b7c876f5fa49c79cab1bc0ed189add5811ec37",
+    "372.js": "e84588edbc9294b4e036a18180e3034d806ed9019c081bc5ef574aeae0ea0762",
+    "202.js.map": "ff100fd7407fe6495994f545d165878f69919d51314f466319738f086166448e",
+    "202.js": "65973d9a240e634eea92eb8f72fcd9b9339719c6cbe85deb308916d0b1267a6f"
+  }
+}
+-----BEGIN PGP SIGNATURE-----
+Version: OpenPGP.js v4.10.11
+Comment: https://openpgpjs.org
+
+wrkEARMKAAYFAmfIBR4AIQkQfk0ManCIZucWIQTzOyW2kQdOhGNlcPN+TQxq
+cIhm5yycAgkB69pgluJnLI8TfmGkX6OtxRhQL/7uzoB7ssanoObe+qVUyDiX
+yOirwWQMwz6I4YGXTvySgnHgDqGVQseZLL+kJpcCCQFk5FZVRW9KbKqo5jhV
+LBSZ+/lzBxJJuWnT4DYeTtUsS8A7wK8ht8BfK5xp1sDciQJcWAj5VhKq1PqS
+TyjvgCXiYA==
+=vByE
+-----END PGP SIGNATURE-----
