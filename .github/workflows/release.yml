@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
     steps:
       - uses: actions/checkout@v4
       
@@ -60,3 +64,5 @@ jobs:
           files: |
             ${{ steps.metadata.outputs.PLUGIN_NAME }}-${{ steps.metadata.outputs.PLUGIN_VERSION }}.zip
           generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
