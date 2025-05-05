@@ -1,3 +1,10 @@
+### [1.12.0]
+
+**Implemented enhancements:**
+
+- Add tooltip display for error messages when status is failed
+- Remove tooltip information from status and create_time column headers
+
 ### [1.11.0]
 
 **Implemented enhancements:**
