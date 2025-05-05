@@ -42,7 +42,6 @@ export const deleteMetrics = async (metricsName: string): Promise<void> => {
     };
     
     const data = await makeHttpRequest(requestBody);
-    console.error('API response data:', data);
     
   } catch (error) {
     console.error('Failed to delete metrics:', error);
@@ -79,7 +78,6 @@ export const fetchMetricsData = async (): Promise<MetricsData[]> => {
     
     const data = await makeHttpRequest(requestBody);
     // Add logs to check the returned data structure
-    console.error('API response data:', data);
 
     let processedData = data;
     if (typeof data === 'string') {
@@ -98,6 +96,7 @@ export const fetchMetricsData = async (): Promise<MetricsData[]> => {
           predict_name: processedData.predict_name[i],
           statement: processedData.statement[i],
           status: processedData.status[i],
+          failed_message: processedData.failed_message[i],
           create_time: new Date(processedData.create_time[i]).toLocaleString() // Convert timestamp to readable format
         });
       }

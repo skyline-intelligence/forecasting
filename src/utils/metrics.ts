@@ -4,6 +4,7 @@ export interface MetricsData {
     predict_name: string;
     statement: string;
     status: string;
+    failed_message: string;
     create_time: string;
   }
   

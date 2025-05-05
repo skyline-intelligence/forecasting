@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { TableColumnsType } from 'antd';
 import { getBackendSrv } from '@grafana/runtime';
-import { Button, Table, Alert, Flex, Modal, Form, Popconfirm, Tag } from 'antd';
+import { Button, Table, Alert, Flex, Modal, Form, Popconfirm, Tag, Tooltip } from 'antd';
 import { DeleteOutlined, CheckCircleOutlined, SyncOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { MetricsData } from '../utils/metrics';
 import { useMetricsTableSearch } from './MetricsTableSearch';
@@ -232,9 +232,10 @@ const PageTwo: React.FC = () => {
       dataIndex: 'status',
       key: 'status',
       width: '10%',
+      showSorterTooltip: false, 
       sorter: (a, b) => a.status.localeCompare(b.status),
       sortDirections: ['descend', 'ascend'],
-      render: (status) => {
+      render: (status, record) => {
         const statusConfig = {
           running: {
             icon: <CheckCircleOutlined />,
@@ -258,6 +259,22 @@ const PageTwo: React.FC = () => {
           color: 'default',
           text: 'unknown'
         };
+
+        if (status === 'failed' && record.failed_message) {
+          return (
+            <Tooltip title={record.failed_message}
+            overlayInnerStyle={{ 
+              backgroundColor: '#fafafa', 
+              color: '#666',
+              border: '1px solid #d9d9d9'
+            }}
+            >
+              <Tag icon={config.icon} color={config.color}>
+                {config.text}
+              </Tag>
+            </Tooltip>
+          );
+        }
         
         return (
           <Tag icon={config.icon} color={config.color}>
@@ -271,6 +288,7 @@ const PageTwo: React.FC = () => {
       dataIndex: 'create_time',
       key: 'create_time',
       width: '20%',
+      showSorterTooltip: false, 
       ...getColumnSearchProps('create_time'),
       sorter: (a, b) => new Date(a.create_time).getTime() - new Date(b.create_time).getTime(),
       sortDirections: ['descend', 'ascend'],

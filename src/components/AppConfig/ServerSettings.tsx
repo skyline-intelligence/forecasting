@@ -47,7 +47,6 @@ const ServerSettings: React.FC<ServerSettingsProps> = ({
       if (serverAddress && !serverAddress.startsWith('http://') && !serverAddress.startsWith('https://')) {
         formattedUrl = `http://${serverAddress}`;
       }
-      console.error('request url: ', formattedUrl, requestBody);
       
       const response = await fetch(formattedUrl, {
         method: 'POST',
@@ -58,7 +57,6 @@ const ServerSettings: React.FC<ServerSettingsProps> = ({
         credentials: 'include'
       });
 
-      console.error('response:', response);
       // Check response status
       if (!response.ok) {
         throw new Error(`request failed: ${response.statusText}`);

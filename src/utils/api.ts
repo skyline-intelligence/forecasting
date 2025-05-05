@@ -23,7 +23,6 @@ export const fetchGrafanaInstanceId = (): string => {
       fetchRemoteAddress().then(address => {
         domain = address;
       });
-      console.error('remote address:', domain);
     } */
     return domain;
   };
@@ -43,21 +42,17 @@ export const fetchGrafanaInstanceId = (): string => {
         data: requestBody,
       });
       const result = await lastValueFrom(response);
-      console.error('response:', result);
   
       if (result && result.data) {
         const address = String(result.data);
-        console.error('server address:', address);
         return address;
       } else {
-        console.error('server address is empty');
         return ''; // Return default value or logic for handling empty values
       }
     } catch (error) {
       console.error('Fetch server address failed:', error);
     }
     
-    console.error('query address from server:', cachedServerAddress);
     // Return default value if address is empty
     return '';
   };
@@ -78,14 +73,11 @@ export const fetchServerAddress = async (instanceId: string): Promise<string> =>
       data: requestBody,
     });
     const result = await lastValueFrom(response);
-    console.error('response:', result);
 
     if (result && result.data) {
       const address = String(result.data);
-      console.error('server address:', address);
       return address;
     } else {
-      console.error('server address is empty');
       return ''; // Return default value or logic for handling empty values
     }
   } catch (error) {
@@ -137,7 +129,6 @@ export const fetchGrafanaConfig = async (command: string) => {
     let parsedData = data;
     if (typeof data === 'string') {
         parsedData = JSON.parse(data);
-        console.error('Parsed data:', parsedData);
     }
 
     if (parsedData && typeof parsedData === 'object') {
@@ -208,7 +199,6 @@ export const fetchGrafanaConfig = async (command: string) => {
     }
     
     // Return empty configuration if no valid URL is found
-    console.error('No valid configuration found, returning empty configuration');
     return {
       apiUrl: '',
       apiKey: '',
@@ -280,6 +270,5 @@ export const updatePlugin = async (
   };
 
   const data = await makeHttpRequest(requestBody);
-  console.error('Received data :', data);
   setShowSuccessAlert(true);
 };

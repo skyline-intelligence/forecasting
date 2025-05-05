@@ -93,7 +93,6 @@ const AdjustThresholdForm: React.FC<AdjustThresholdFormProps> = ({
       const forecastingValues = Array.isArray(forecastingArray) ? forecastingArray : Object.values(forecastingArray);
       
       for (let i = 0; i < timePoints.length; i++) {
-        console.error("timePoints:", new Date(timePoints[i]));
         formattedData.push({
           time: new Date(timePoints[i]),
           actual: parseFloat(actualValues[i]),

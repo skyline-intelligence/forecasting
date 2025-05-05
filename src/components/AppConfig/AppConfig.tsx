@@ -62,7 +62,6 @@ const AppConfig = ({ plugin }: AppConfigProps) => {
           message.error("Please setup server address first, add environment variable GF_PLUGINS_FORECASTING_SERVER={your_server_address} to your grafana server!");
           return;
         } else {
-          console.error("server_address : ", serverAddress);
           setServerAddress(serverAddress);
           localStorage.setItem('skyline_backend_url', serverAddress);
         }
@@ -87,7 +86,6 @@ const AppConfig = ({ plugin }: AppConfigProps) => {
             username: query_config.username || jsonData?.username || '',
             isApiKeySet: Boolean(query_config.apiKey) || (query_config.authType === 'basic' && Boolean(query_config.username)),
           });
-          console.error("query_config : ", query_config);
         }
       } catch (error) {
         console.error('Loading grafana config failed :', error);
@@ -96,14 +94,12 @@ const AppConfig = ({ plugin }: AppConfigProps) => {
       try {
         const write_config = await fetchGrafanaConfig('get_grafana_write_config');
         if (write_config) {
-          console.error("before write_config : ", write_config);
           setWriteState({
             ...write_config,
             authType: write_config.authType || jsonData?.authType || 'bearer',
             username: write_config.username || jsonData?.username || '',
             isApiKeySet: Boolean(write_config.apiKey) || (write_config.authType === 'basic' && Boolean(write_config.username)),
           });
-          console.error("after write_config : ", write_config);
         }
         
       } catch (error) {

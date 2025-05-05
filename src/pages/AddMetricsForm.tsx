@@ -85,7 +85,6 @@ const AddMetricsForm: React.FC<AddMetricsFormProps> = ({
         throw new Error(`Unsupported datasource type: ${selectedDatasource.type}`);
       }
       
-      console.error('Query results:', queryResult);
       setChartData(queryResult);
     } catch (error) {
       console.error('Query results:', error);
