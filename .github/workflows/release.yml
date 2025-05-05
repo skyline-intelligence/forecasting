@@ -27,6 +27,10 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.23.5'
+      
+      - name: Install Mage
+        run: |
+          go install github.com/magefile/mage@latest
           
       - name: Build backend
         run: |
