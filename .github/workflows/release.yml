@@ -29,9 +29,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build plugin
+      - name: Build
         run: npm run build
-        uses: grafana/plugin-actions/build-plugin@main
+        
+      - uses: grafana/plugin-actions/build-plugin@main
         with:
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
           attestation: true
