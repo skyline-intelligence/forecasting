@@ -5,6 +5,11 @@ on:
     tags:
       - 'v*'
 
+permissions: 
+  id-token: write 
+  contents: write 
+  attestations: write 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +30,10 @@ jobs:
         run: npm ci
         
       - name: Build plugin
-        run: npm run build
+        uses: grafana/plugin-actions/build-plugin@main
+        with:
+          policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
+          attestation: true
         
       - name: Setup Go
         uses: actions/setup-go@v5
