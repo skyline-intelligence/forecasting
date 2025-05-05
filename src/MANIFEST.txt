@@ -4,7 +4,7 @@ Hash: SHA512
 
 {
   "manifestVersion": "2.0.0",
-  "signatureType": "private",
+  "signatureType": "community",
   "signedByOrg": "skylineintelligence",
   "signedByOrgName": "skylineintelligence",
   "rootUrls": [
