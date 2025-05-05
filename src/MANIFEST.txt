@@ -8,7 +8,7 @@ Hash: SHA512
   "signedByOrg": "skylineintelligence",
   "signedByOrgName": "skylineintelligence",
   "rootUrls": [
-    "http://localhost:3000/"
+    "http://localhost:3000"
   ],
   "plugin": "skylineintelligence-forecasting-app",
   "version": "1.0.0",
