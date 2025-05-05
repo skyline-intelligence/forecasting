@@ -29,50 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build
-        run: npm run build
-        
       - uses: grafana/plugin-actions/build-plugin@main
         with:
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
           attestation: true
         
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.23.5'
-      
-      - name: Install Mage
-        run: |
-          go install github.com/magefile/mage@latest
-          
-      - name: Build backend
-        run: |
-          go mod download
-          mage -v
-          
-      - name: Sign plugin
-        run: npm run sign
-        env:
-          GRAFANA_ACCESS_POLICY_TOKEN: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
-          
-      - name: Get plugin metadata
-        id: metadata
-        run: |
-          echo "PLUGIN_NAME=$(cat dist/plugin.json | jq -r .id)" >> $GITHUB_OUTPUT
-          echo "PLUGIN_VERSION=$(cat dist/plugin.json | jq -r .info.version)" >> $GITHUB_OUTPUT
-          
-      - name: Package plugin
-        run: |
-          mkdir -p ${{ steps.metadata.outputs.PLUGIN_NAME }}
-          cp -r dist/* ${{ steps.metadata.outputs.PLUGIN_NAME }}
-          zip -r ${{ steps.metadata.outputs.PLUGIN_NAME }}-${{ steps.metadata.outputs.PLUGIN_VERSION }}.zip ${{ steps.metadata.outputs.PLUGIN_NAME }}
-          
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            ${{ steps.metadata.outputs.PLUGIN_NAME }}-${{ steps.metadata.outputs.PLUGIN_VERSION }}.zip
-          generate_release_notes: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
