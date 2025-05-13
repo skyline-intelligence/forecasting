@@ -49,6 +49,12 @@ jobs:
         with:
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
           attestation: true
+
+      - name: Install root cerificate
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ca-certificates
+          sudo update-ca-certificates --fresh
           
       - name: Wait for GitHub to process the tag
         run: sleep 15
