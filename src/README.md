@@ -57,7 +57,7 @@ services:
 ##### 2\. Install skyline forecasting plugin  <br>
 Record the domain name or IP address of the forecasting server you just started. When starting the Grafana server, pass the forecasting server address as an environment variable to Grafana using the following command: (The pluginsDir can be customized accordingly)
 ```
-grafana cli --pluginsDir ./data/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.0.0/skylineintelligence-forecasting-app-1.0.0.zip plugins install skylineintelligence-forecasting-app
+grafana cli --pluginsDir ./data/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.13.0/skylineintelligence-forecasting-app-1.13.0.zip plugins install skylineintelligence-forecasting-app
 
 export GF_PLUGINS_FORECASTING_SERVER={your_forecasting_server_address}
 ./bin/grafana server
@@ -70,7 +70,7 @@ FROM grafana/grafana:latest
 
 USER root
 RUN mkdir -p /var/lib/grafana/plugins
-RUN grafana cli --pluginsDir /var/lib/grafana/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.0.0/skylineintelligence-forecasting-app-1.0.0.zip plugins install skylineintelligence-forecasting-app
+RUN grafana cli --pluginsDir /var/lib/grafana/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.13.0/skylineintelligence-forecasting-app-1.13.0.zip plugins install skylineintelligence-forecasting-app
 
 USER grafana
 ```
