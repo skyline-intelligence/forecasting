@@ -53,14 +53,22 @@ jobs:
       - name: Wait for GitHub to process the tag
         run: sleep 15
           
+      - name: Delete existing release if it exists
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          gh release delete $TAG_NAME --yes || true
+          
       - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
           ZIP_FILE=$(ls skylineintelligence-forecasting-app-*.zip | head -n 1)
           SHA_FILE="${ZIP_FILE}.sha1"
           
-          gh release create "v$VERSION" \
-            --title "Release v$VERSION" \
+          gh release create "$TAG_NAME" \
+            --title "Release $TAG_NAME" \
             --generate-notes \
             "$ZIP_FILE" "$SHA_FILE"
