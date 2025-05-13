@@ -15,6 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取完整历史记录，确保标签可用
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -27,6 +29,18 @@ jobs:
         run: |
           VERSION=$(grep -o '"version": *"[^"]*"' src/plugin.json | grep -o '"[^"]*"$' | tr -d '"')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Extracted version: $VERSION"
+          
+      - name: Verify tag matches plugin version
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          EXPECTED_TAG="v$VERSION"
+          echo "Current tag: $TAG_NAME"
+          echo "Expected tag based on plugin.json: $EXPECTED_TAG"
+          if [ "$TAG_NAME" != "$EXPECTED_TAG" ]; then
+            echo "::error::Tag name ($TAG_NAME) does not match plugin version ($EXPECTED_TAG)"
+            exit 1
+          fi
           
       - name: Install dependencies
         run: npm ci
@@ -39,11 +53,11 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref_name }}
+          tag_name: v${{ env.VERSION }}  # 使用从 plugin.json 提取的版本
+          name: Release v${{ env.VERSION }}
           files: |
             skylineintelligence-forecasting-app-*.zip
             skylineintelligence-forecasting-app-*.zip.sha1
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
