@@ -11,7 +11,7 @@ Hash: SHA512
     "http://localhost:3000"
   ],
   "plugin": "skylineintelligence-forecasting-app",
-  "version": "1.0.0",
+  "version": "1.13.0",
   "time": 1741161758270,
   "keyId": "7e4d0c6a708866e7",
   "files": {

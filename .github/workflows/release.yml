@@ -21,6 +21,12 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+      
+      - name: Extract version from plugin.json
+        id: extract_version
+        run: |
+          VERSION=$(grep -o '"version": *"[^"]*"' src/plugin.json | grep -o '"[^"]*"$' | tr -d '"')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           
       - name: Install dependencies
         run: npm ci
