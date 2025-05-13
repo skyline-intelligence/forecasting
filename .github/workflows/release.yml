@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史记录，确保标签可用
+          fetch-depth: 0  
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -50,14 +50,17 @@ jobs:
           policy_token: ${{ secrets.GRAFANA_ACCESS_POLICY_TOKEN }}
           attestation: true
           
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ env.VERSION }}  # 使用从 plugin.json 提取的版本
-          name: Release v${{ env.VERSION }}
-          files: |
-            skylineintelligence-forecasting-app-*.zip
-            skylineintelligence-forecasting-app-*.zip.sha1
-          generate_release_notes: true
+      - name: Wait for GitHub to process the tag
+        run: sleep 15
+          
+      - name: Create GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ZIP_FILE=$(ls skylineintelligence-forecasting-app-*.zip | head -n 1)
+          SHA_FILE="${ZIP_FILE}.sha1"
+          
+          gh release create "v$VERSION" \
+            --title "Release v$VERSION" \
+            --generate-notes \
+            "$ZIP_FILE" "$SHA_FILE"
