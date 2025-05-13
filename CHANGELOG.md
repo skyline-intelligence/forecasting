@@ -1,3 +1,10 @@
+### [1.13.0]
+
+**Implemented enhancements:**
+
+- Fix simulation clear cache data bug
+- Update the installation guide
+
 ### [1.12.0]
 
 **Implemented enhancements:**
