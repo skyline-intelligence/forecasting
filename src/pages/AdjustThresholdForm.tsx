@@ -102,7 +102,7 @@ const AdjustThresholdForm: React.FC<AdjustThresholdFormProps> = ({
       
       setChartData(formattedData);
     } catch (error) {
-      console.error('Simulation failed:', error);
+      setChartData([]);
       setError(`Simulation failed: ${error.message || error}`);
     } finally {
       setIsSimulating(false);
