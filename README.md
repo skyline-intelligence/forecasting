@@ -1,136 +1,111 @@
-# Grafana app plugin template
+# Skyline Forecasting Platform
 
-This template is a starting point for building an app plugin for Grafana.
+Skyline Forecasting Platform is a powerful time series prediction tool specifically designed for Grafana.
 
-## What are Grafana app plugins?
+## Key Features
 
-App plugins can let you create a custom out-of-the-box monitoring experience by custom pages, nested data sources and panel plugins.
+- **High-Precision Predictive Analytics**: Generate highly accurate forecasts based on historical data patterns, enabling proactive trend identification and risk mitigation
+- **Real-Time Anomaly Detection**: Continuously monitor data streams to instantly identify deviations from expected patterns and trigger immediate alerts
+- **Customizable Configuration**: Support for diverse data sources and advanced prediction models that can be tailored to specific business requirements for optimal results
+- **On-Premises Deployment**: Engineered specifically for internal network environments to ensure sensitive data remains within your secure infrastructure
+- **Seamless Grafana Integration**: Perfectly integrates with Grafana dashboards, providing intuitive visualization and interactive experiences
 
-## Get started
+![Landing Page](./src/img/landing.png)
 
-### Backend
+## Getting Started
+**Note: This platform is designed for on-premises deployment in internal network environments. All data processing occurs within your infrastructure, ensuring sensitive data remains secure and never leaves your network.**
 
-1. Update [Grafana plugin SDK for Go](https://grafana.com/developers/plugin-tools/key-concepts/backend-plugins/grafana-plugin-sdk-for-go) dependency to the latest minor version:
+##### 1\. Install Skyline Forecasting Server  <br>
+**System Requirements:**
+- **Recommended Hardware**: High-performance server with GPU support for optimal prediction performance
+- **Minimum Requirements**: 4 CPU cores, 16GB RAM, 40GB storage
+- **Optimal Configuration**: 16+ CPU cores, 32GB+ RAM, NVIDIA GPU (at least 8GB VRAM), 40GB+ SSD storage
+- **Operating System**: Linux (recommended)
 
-   ```bash
-   go get -u github.com/grafana/grafana-plugin-sdk-go
-   go mod tidy
-   ```
+<br> Prepare a Docker environment, install MySQL database, and provide MySQL configuration to the forecasting server through environment variables. Start the server using the script:  <br>
 
-2. Build backend plugin binaries for Linux, Windows and Darwin:
+```
+#!/bin/bash
+docker pull skylinecorp/forecasting:latest
+docker run -d -p 80:80 --name forecasting-container \
+  -e PYTHONUNBUFFERED=1 \
+  -e DB_HOST={your_mysql_host} \
+  -e DB_PORT={your_mysql_port} \
+  -e DB_USER={your_mysql_username} \
+  -e DB_PASSWORD={your_mysql_password} \
+  -e DB_NAME={your_mysql_database} \
+  skylinecorp/forecasting:latest
 
-   ```bash
-   mage -v
-   ```
+```
+Or start with docker-compose:
+```
+version: '3.8'
 
-3. List all available Mage targets for additional commands:
+services:
+  forecasting-app:
+    image: skylinecorp/forecasting:latest
+    container_name: forecasting-container
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DB_HOST={your_mysql_host}
+      - DB_PORT={your_mysql_port}
+      - DB_USER={your_mysql_username}
+      - DB_PASSWORD={your_mysql_password}
+      - DB_NAME={your_mysql_database}
+    ports:
+      - "80:80"
+    restart: unless-stopped
+```
+##### 2\. Install skyline forecasting plugin  <br>
+Record the domain name or IP address of the forecasting server you just started. When starting the Grafana server, pass the forecasting server address as an environment variable to Grafana using the following command: (The pluginsDir can be customized accordingly)
+```
+grafana cli --pluginsDir ./data/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.13.0/skylineintelligence-forecasting-app-1.13.0.zip --insecure plugins install skylineintelligence-forecasting-app
 
-   ```bash
-   mage -l
-   ```
+export GF_PLUGINS_FORECASTING_SERVER={your_forecasting_server_address}
+./bin/grafana server
+```
+If you're using docker-compose, use the following configuration:
 
-### Frontend
+Create a Dockerfile with the following content:
+```
+FROM grafana/grafana:latest
 
-1. Install dependencies
+USER root
+RUN mkdir -p /var/lib/grafana/plugins
+RUN grafana cli --pluginsDir /var/lib/grafana/plugins --pluginUrl https://github.com/skyline-intelligence/forecasting/releases/download/v1.13.0/skylineintelligence-forecasting-app-1.13.0.zip --insecure plugins install skylineintelligence-forecasting-app
 
-   ```bash
-   npm install
-   ```
+USER grafana
+```
 
-2. Build plugin in development mode and run in watch mode
+Create a docker-compose.yml file with the following content:
+```
+version: '3.8'
+services:
+  grafana:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: grafana-container
+    environment:
+      - GF_PLUGINS_FORECASTING_SERVER={your_forecasting_server_address}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+```
+##### 3\. Enable skyline forecasting plugin  <br>
+- Log in to Grafana with administrator credentials, click on the Plugins option in the left sidebar menu.
+- In the Plugins page, search for "forecasting", then click on the forecasting plugin that appears in the search results.
+- Click the Enable button in the upper right corner to activate the forecasting plugin. After enabling the plugin, you can proceed to configure it.
 
-   ```bash
-   npm run dev
-   ```
+##### 4\. Configure Metrics Query and Write Addresses  <br>
+In the configuration page, set up the addresses for querying and writing metrics. Authentication methods include username+password and token.  <br>
+- For example, Prometheus query address: https://localhost:9090/api/v1/query_range   <br>
+- For example, Prometheus write address: https://localhost:9090/api/v1/push     <br>
 
-3. Build plugin in production mode
+##### 5\. After completing the configuration, click save. Engineers can now add metrics that need to be predicted on the Metrics Dashboard page.
 
-   ```bash
-   npm run build
-   ```
 
-4. Run the tests (using Jest)
+## Technical Support
 
-   ```bash
-   # Runs the tests and watches for changes, requires git init first
-   npm run test
-
-   # Exits after running all the tests
-   npm run test:ci
-   ```
-
-5. Spin up a Grafana instance and run the plugin inside it (using Docker)
-
-   ```bash
-   npm run server
-   ```
-
-6. Run the E2E tests (using Playwright)
-
-   ```bash
-   # Spins up a Grafana instance first that we tests against
-   npm run server
-
-   # If you wish to start a certain Grafana version. If not specified will use latest by default
-   GRAFANA_VERSION=11.3.0 npm run server
-
-   # Starts the tests
-   npm run e2e
-   ```
-
-7. Run the linter
-
-   ```bash
-   npm run lint
-
-   # or
-
-   npm run lint:fix
-   ```
-
-# Distributing your plugin
-
-When distributing a Grafana plugin either within the community or privately the plugin must be signed so the Grafana application can verify its authenticity. This can be done with the `@grafana/sign-plugin` package.
-
-_Note: It's not necessary to sign a plugin during development. The docker development environment that is scaffolded with `@grafana/create-plugin` caters for running the plugin without a signature._
-
-## Initial steps
-
-Before signing a plugin please read the Grafana [plugin publishing and signing criteria](https://grafana.com/legal/plugins/#plugin-publishing-and-signing-criteria) documentation carefully.
-
-`@grafana/create-plugin` has added the necessary commands and workflows to make signing and distributing a plugin via the grafana plugins catalog as straightforward as possible.
-
-Before signing a plugin for the first time please consult the Grafana [plugin signature levels](https://grafana.com/legal/plugins/#what-are-the-different-classifications-of-plugins) documentation to understand the differences between the types of signature level.
-
-1. Create a [Grafana Cloud account](https://grafana.com/signup).
-2. Make sure that the first part of the plugin ID matches the slug of your Grafana Cloud account.
-   - _You can find the plugin ID in the `plugin.json` file inside your plugin directory. For example, if your account slug is `acmecorp`, you need to prefix the plugin ID with `acmecorp-`._
-3. Create a Grafana Cloud API key with the `PluginPublisher` role.
-4. Keep a record of this API key as it will be required for signing a plugin
-
-## Signing a plugin
-
-### Using Github actions release workflow
-
-If the plugin is using the github actions supplied with `@grafana/create-plugin` signing a plugin is included out of the box. The [release workflow](./.github/workflows/release.yml) can prepare everything to make submitting your plugin to Grafana as easy as possible. Before being able to sign the plugin however a secret needs adding to the Github repository.
-
-1. Please navigate to "settings > secrets > actions" within your repo to create secrets.
-2. Click "New repository secret"
-3. Name the secret "GRAFANA_API_KEY"
-4. Paste your Grafana Cloud API key in the Secret field
-5. Click "Add secret"
-
-#### Push a version tag
-
-To trigger the workflow we need to push a version tag to github. This can be achieved with the following steps:
-
-1. Run `npm version <major|minor|patch>`
-2. Run `git push origin main --follow-tags`
-
-## Learn more
-
-Below you can find source code for existing app plugins and other related documentation.
-
-- [Basic app plugin example](https://github.com/grafana/grafana-plugin-examples/tree/master/examples/app-basic#readme)
-- [`plugin.json` documentation](https://grafana.com/developers/plugin-tools/reference/plugin-jsonplugin-json)
-- [Sign a plugin](https://grafana.com/developers/plugin-tools/publish-a-plugin/sign-a-plugin)
+For technical support, please contact our team at:
+support@skyline-intelligence.com
