@@ -10,7 +10,7 @@ Skyline Forecasting Platform is a powerful time series prediction tool specifica
 - **On-Premises Deployment**: Engineered specifically for internal network environments to ensure sensitive data remains within your secure infrastructure
 - **Seamless Grafana Integration**: Perfectly integrates with Grafana dashboards, providing intuitive visualization and interactive experiences
 
-![Landing Page](./src/img/landing.png)
+![Landing Page](./assets/images/landing.png)
 
 ## Getting Started
 **Note: This platform is designed for on-premises deployment in internal network environments. All data processing occurs within your infrastructure, ensuring sensitive data remains secure and never leaves your network.**
