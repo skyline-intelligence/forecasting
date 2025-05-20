@@ -24,10 +24,10 @@
   "includes": [
     {
       "type": "page",
-      "name": "Metrics Dashboard",
+      "name": "Forecasting Dashboard",
       "path": "/a/%PLUGIN_ID%/metrics",
       "addToNav": true,
-      "defaultNav": false
+      "defaultNav": true
     },
     {
       "type": "page",
