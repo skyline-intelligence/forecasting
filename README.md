@@ -109,7 +109,3 @@ In the configuration page, set up the addresses for querying and writing metrics
 
 For technical support, please contact our team at:
 support@skyline-intelligence.com
-
-## FAQ
-#### Q: Why isn't the forecasting plugin listed in the official Grafana catalog?
-A: The forecasting plugin offers functionality that competes with Grafana Labs' paid Machine Learning services. As a result, it is distributed independently through our GitHub repository rather than through the official Grafana catalog.
